@@ -1,9 +1,12 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 import Groq from "groq-sdk";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const ai = new GoogleGenAI({ 
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY || "" 
+});
+
 const groq = new Groq({ 
-  apiKey: process.env.GROQ_API_KEY || "",
+  apiKey: import.meta.env.VITE_GROQ_API_KEY || "",
   dangerouslyAllowBrowser: true
 });
 
