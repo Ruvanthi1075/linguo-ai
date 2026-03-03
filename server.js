@@ -32,7 +32,7 @@ app.post("/api/translate", async (req, res) => {
           content: `Translate the following text to ${targetLanguage}. Only return the translated text:\n\n${text}`
         }
       ],
-      model: "llama3-8b-8192"
+   model: "llama-3.3-70b-versatile"
     });
 
     res.json({
