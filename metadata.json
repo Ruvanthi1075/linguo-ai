@@ -1,0 +1,5 @@
+{
+  "name": "Linguo - Multimodal AI Translator",
+  "description": "Advanced translation app with text, audio, and video support. Choose between fast and high-accuracy models.",
+  "requestFramePermissions": ["microphone"]
+}
