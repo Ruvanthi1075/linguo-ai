@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config(); // ✅ MUST be first
+dotenv.config();
 
 import express from "express";
 import cors from "cors";
@@ -15,10 +15,9 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 🔍 Debug (you can remove later)
 console.log("Groq key loaded:", process.env.GROQ_API_KEY ? "YES" : "NO");
 
-// 🔐 Use server-side env vars
+// Initialize clients
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY
 });
@@ -27,7 +26,9 @@ const gemini = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY
 });
 
-// ✅ Translation API
+// ===============================
+// TRANSLATION API
+// ===============================
 app.post("/api/translate", async (req, res) => {
   const { text, targetLanguage } = req.body;
 
@@ -42,13 +43,18 @@ app.post("/api/translate", async (req, res) => {
     res.json({
       translation: response.choices[0].message.content
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Translation failed" });
-  }
-});
 
-// Serve Vite build
+  } catch (error) {
+    console.error("Groq error:", error);
+    res.status(500).json({
+      error: error.message || "Translation failed"
+    });
+  }
+}); // ✅ THIS WAS MISSING
+
+// ===============================
+// SERVE FRONTEND
+// ===============================
 app.use(express.static(path.join(__dirname, "dist")));
 
 app.get("*", (req, res) => {
